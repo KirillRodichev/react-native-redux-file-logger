@@ -1,31 +1,43 @@
 import * as React from 'react';
+import { useCallback } from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-redux-file-logger';
+import { Provider } from 'react-redux';
+import Counter from './features/counter/Counter';
+import createStore from './store';
+import { Button, Platform } from 'react-native';
+import {
+  archive,
+  SupportedIosRootDirsEnum,
+  useAsyncStoreCreator,
+} from 'react-native-redux-file-logger';
+import { SupportedAndroidRootDirsEnum } from '../../src/types';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const store = useAsyncStoreCreator(createStore);
 
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+  const handleArchive = useCallback(async () => {
+    try {
+      await archive({
+        rootDir:
+          Platform.OS === 'android'
+            ? SupportedAndroidRootDirsEnum.Files
+            : SupportedIosRootDirsEnum.Cache,
+        fileName: 'logs.zip',
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }, []);
 
+  if (!store) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    <Provider store={store}>
+      <Counter />
+      {/* @ts-ignore */}
+      <Button title="ARCHIVE" onPress={handleArchive} />
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
-  },
-});

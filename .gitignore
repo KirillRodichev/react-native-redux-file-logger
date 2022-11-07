@@ -29,6 +29,12 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
+### Xcode Patch ###
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
+
 # Android/IJ
 #
 .classpath
@@ -43,6 +49,7 @@ android.iml
 # Cocoapods
 #
 example/ios/Pods
+ios/Pods
 
 # Ruby
 example/vendor/

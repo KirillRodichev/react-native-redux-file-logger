@@ -7,8 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E555C0D2413F4C50049A1A2 /* ReduxFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* ReduxFileLogger.m */; };
-		F4FF95D7245B92E800C19C63 /*  ReduxFileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /*  ReduxFileLogger.swift */; };
+		CE39C5E7291748CB00E7C1BE /* Compressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE39C5E6291748CB00E7C1BE /* Compressor.swift */; };
+		CE39C5E9291751E000E7C1BE /* RFLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE39C5E8291751E000E7C1BE /* RFLError.swift */; };
+		CE9F8938291811A0004611CB /* RCTPromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9F8937291811A0004611CB /* RCTPromise.swift */; };
+		CEDC501629172FFC00D87C23 /* FileConfigReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC501529172FFC00D87C23 /* FileConfigReader.swift */; };
+		CEDC50182917300E00D87C23 /* FileCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC50172917300E00D87C23 /* FileCreator.swift */; };
+		CEDC501A2917302100D87C23 /* FileHandlerOutputStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC50192917302100D87C23 /* FileHandlerOutputStream.swift */; };
+		CEDC501C2917303D00D87C23 /* OsLogLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC501B2917303D00D87C23 /* OsLogLogger.swift */; };
+		E0457007428A8D3A485B1A0A /* Pods_ReduxFileLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 703BA990892023D90F459CC3 /* Pods_ReduxFileLogger.framework */; };
+		F4FF95D7245B92E800C19C63 /* ReduxFileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /* ReduxFileLogger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,7 +32,17 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libReduxFileLogger.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libReduxFileLogger.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		38B9CAA6B241B542AAAB58C2 /* Pods-ReduxFileLogger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReduxFileLogger.release.xcconfig"; path = "Target Support Files/Pods-ReduxFileLogger/Pods-ReduxFileLogger.release.xcconfig"; sourceTree = "<group>"; };
+		703BA990892023D90F459CC3 /* Pods_ReduxFileLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReduxFileLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D4B26D45FDFDE3188965886 /* Pods-ReduxFileLogger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReduxFileLogger.debug.xcconfig"; path = "Target Support Files/Pods-ReduxFileLogger/Pods-ReduxFileLogger.debug.xcconfig"; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* ReduxFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReduxFileLogger.m; sourceTree = "<group>"; };
+		CE39C5E6291748CB00E7C1BE /* Compressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compressor.swift; sourceTree = "<group>"; };
+		CE39C5E8291751E000E7C1BE /* RFLError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFLError.swift; sourceTree = "<group>"; };
+		CE9F8937291811A0004611CB /* RCTPromise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCTPromise.swift; sourceTree = "<group>"; };
+		CEDC501529172FFC00D87C23 /* FileConfigReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileConfigReader.swift; sourceTree = "<group>"; };
+		CEDC50172917300E00D87C23 /* FileCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCreator.swift; sourceTree = "<group>"; };
+		CEDC50192917302100D87C23 /* FileHandlerOutputStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileHandlerOutputStream.swift; sourceTree = "<group>"; };
+		CEDC501B2917303D00D87C23 /* OsLogLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsLogLogger.swift; sourceTree = "<group>"; };
 		F4FF95D5245B92E700C19C63 /* ReduxFileLogger-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReduxFileLogger-Bridging-Header.h"; sourceTree = "<group>"; };
 		F4FF95D6245B92E800C19C63 /* ReduxFileLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReduxFileLogger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -35,12 +52,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0457007428A8D3A485B1A0A /* Pods_ReduxFileLogger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05ABC59982A7694862AD616F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				703BA990892023D90F459CC3 /* Pods_ReduxFileLogger.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		134814211AA4EA7D00B7C361 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -52,11 +78,29 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				CE9F8937291811A0004611CB /* RCTPromise.swift */,
+				CE39C5E8291751E000E7C1BE /* RFLError.swift */,
+				CE39C5E6291748CB00E7C1BE /* Compressor.swift */,
+				CEDC501B2917303D00D87C23 /* OsLogLogger.swift */,
+				CEDC50192917302100D87C23 /* FileHandlerOutputStream.swift */,
+				CEDC50172917300E00D87C23 /* FileCreator.swift */,
+				CEDC501529172FFC00D87C23 /* FileConfigReader.swift */,
 				F4FF95D6245B92E800C19C63 /* ReduxFileLogger.swift */,
 				B3E7B5891CC2AC0600A0062D /* ReduxFileLogger.m */,
 				F4FF95D5245B92E700C19C63 /* ReduxFileLogger-Bridging-Header.h */,
 				134814211AA4EA7D00B7C361 /* Products */,
+				B0ADE702A0F06DE743C0D4EA /* Pods */,
+				05ABC59982A7694862AD616F /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		B0ADE702A0F06DE743C0D4EA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8D4B26D45FDFDE3188965886 /* Pods-ReduxFileLogger.debug.xcconfig */,
+				38B9CAA6B241B542AAAB58C2 /* Pods-ReduxFileLogger.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -66,6 +110,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "ReduxFileLogger" */;
 			buildPhases = (
+				DF7FE0E7EDC5F19F427AAE10 /* [CP] Check Pods Manifest.lock */,
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
 				58B511D91A9E6C8500147676 /* CopyFiles */,
@@ -111,13 +156,44 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		DF7FE0E7EDC5F19F427AAE10 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ReduxFileLogger-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		58B511D71A9E6C8500147676 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEDC50182917300E00D87C23 /* FileCreator.swift in Sources */,
+				CEDC501629172FFC00D87C23 /* FileConfigReader.swift in Sources */,
 				F4FF95D7245B92E800C19C63 /* ReduxFileLogger.swift in Sources */,
-				B3E7B58A1CC2AC0600A0062D /* ReduxFileLogger.m in Sources */,
+				CE9F8938291811A0004611CB /* RCTPromise.swift in Sources */,
+				CE39C5E9291751E000E7C1BE /* RFLError.swift in Sources */,
+				CEDC501A2917302100D87C23 /* FileHandlerOutputStream.swift in Sources */,
+				CE39C5E7291748CB00E7C1BE /* Compressor.swift in Sources */,
+				CEDC501C2917303D00D87C23 /* OsLogLogger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,6 +297,7 @@
 		};
 		58B511F01A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8D4B26D45FDFDE3188965886 /* Pods-ReduxFileLogger.debug.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -228,6 +305,7 @@
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ReduxFileLogger;
@@ -240,6 +318,7 @@
 		};
 		58B511F11A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38B9CAA6B241B542AAAB58C2 /* Pods-ReduxFileLogger.release.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -247,6 +326,7 @@
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ReduxFileLogger;

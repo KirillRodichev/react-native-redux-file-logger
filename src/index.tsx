@@ -1,22 +1,22 @@
-import { NativeModules, Platform } from 'react-native';
+import { addLogger, getLogger } from './logger';
+import { FileConfig, SupportedIosRootDirsEnum } from './types';
+import ReduxFileLoggerModule from './logger/ReduxFileLoggerModule';
+import { useAsyncStoreCreator } from './hooks/useAsyncStoreCreator';
+import { createLoggerMiddleware } from './middleware/createLoggerMiddleware';
+import { createReduxFileLoggerMiddleware } from './middleware/createReduxFileLoggerMiddleware';
 
-const LINKING_ERROR =
-  `The package 'react-native-redux-file-logger' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo Go\n';
+export type {LoggerOptions} from './types'
 
-const ReduxFileLogger = NativeModules.ReduxFileLogger
-  ? NativeModules.ReduxFileLogger
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
-
-export function multiply(a: number, b: number): Promise<number> {
-  return ReduxFileLogger.multiply(a, b);
+function archive(fileConfig: FileConfig, tag?: string) {
+  return ReduxFileLoggerModule.archive(fileConfig, tag)
 }
+
+export {
+  archive,
+  addLogger,
+  getLogger,
+  useAsyncStoreCreator,
+  createLoggerMiddleware,
+  createReduxFileLoggerMiddleware,
+  SupportedIosRootDirsEnum,
+};
