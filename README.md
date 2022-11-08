@@ -34,8 +34,8 @@ The idea of this library is to use the standard output functions and redirect th
   - [Hooks](#Hooks)
     - [useAsyncStoreCreator](#useAsyncStoreCreator)
   - [Recipes](#Recipes)
-    - [Pulling files from Android emulators](#Pulling files from Android emulators)
-    - [Browsing files on iOS emulators](#Browsing files on iOS emulators)
+    - [Pulling files from Android emulators](#pulling-files-from-android-emulators)
+    - [Browsing files on iOS emulators](#browsing-files-on-iOS emulators)
 - [Thanks](#Thanks)
 - [License](#License)
 
