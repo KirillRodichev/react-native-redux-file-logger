@@ -6,9 +6,32 @@ This tool allows you to log Redux actions + state to files. It also provides a c
 
 ## Motivation
 
-3rd party libraries like [react-native-fs](https://github.com/itinance/react-native-fs) allows you to write data to files, but each write operation opens & closes a new IO stream.
+3rd party libraries like [react-native-fs](https://github.com/itinance/react-native-fs) allows you to write data to files, but each write operation opens & closes a new output stream.
 
 The idea of this library is to use the standard output functions and redirect the output stream to a file, so that the stream remains open. In this case the logging process doesn't affect the app performance
+
+- [Installation](#Installation)
+- [Usage](#Usage)
+  - [Creating Redux file logger middleware](#Creating Redux file logger middleware)
+  - [Creating file logger](#Creating file logger)
+  - [Creating archive](#Creating archive)
+- [API](#API)
+  - [Types](#Types)
+    - [LoggerOptions](#LoggerOptions)
+    - [InclusionPredicate](#InclusionPredicate)
+    - [FileConfig](#FileConfig)
+  - [Constants](#Constants)
+    - [SupportedIosRootDirsEnum](#SupportedIosRootDirsEnum)
+    - [SupportedAndroidRootDirsEnum](#SupportedAndroidRootDirsEnum)
+  - [Functions](#Functions)
+    - [createReduxFileLoggerMiddleware](#createReduxFileLoggerMiddleware)
+    - [createLoggerMiddleware](#createLoggerMiddleware)
+    - [addFileLogger](#addFileLogger)
+    - [getFileLogger](#getFileLogger)
+    - [archive](#archive)
+  - [Hooks](#Hooks)
+    - [useAsyncStoreCreator](#useAsyncStoreCreator)
+- [License](#License)
 
 ## Installation
 
@@ -19,7 +42,7 @@ npx pod-install
 
 ## Usage
 
-### Using Redux file logger middleware
+### Creating Redux file logger middleware
 
 1. Create an async creator for the store that calls `createReduxFileLoggerMiddleware()`
 
@@ -93,7 +116,9 @@ export default function App() {
 
 ```
 
-### Using file logger (e.g. for navigation state logging)
+### Creating file logger
+
+Let's consider an example of a file logger for navigation state changes
 
 1. Create file logger for navigation
 ```ts
@@ -144,7 +169,7 @@ const stateListener: StateListenerCallbackType = e => {
 addNavigationStateListener(stateListener);
 ```
 
-## Using archive function
+## Creating archive
 
 Archiving logs from all file logger instances to a specified file. If you need to archive logs for a single instance, pass the `tag` as a second parameter (see API section).
 
@@ -165,7 +190,7 @@ await archive({
 
 ### Types
 
-**LoggerOptions**
+#### LoggerOptions
 
 ```ts
 type LoggerOptions<TState = any, TLogger extends {log: (message: string) => void} = Logger> = {
@@ -190,13 +215,13 @@ type LoggerOptions<TState = any, TLogger extends {log: (message: string) => void
 - **stateTransformer** - accepts prev & next state and applies its logic to is
 - **logger** - logger instance, that implements `log(message: string) => void` method
 
-**InclusionPredicate**
+#### InclusionPredicate
 
 ```ts
 type InclusionPredicate<TState> = (action: AnyAction, getState: () => TState) => boolean;
 ```
 
-**FileConfig**
+#### FileConfig
 
 ```ts
 type FileConfig = {
@@ -214,7 +239,7 @@ Example:
 
 ### Constants
 
-**SupportedIosRootDirsEnum**
+#### SupportedIosRootDirsEnum
 
 Dirs that correspond to `FileManager.SearchPathDirectory` in `Foundation`
 
@@ -226,7 +251,7 @@ enum SupportedIosRootDirsEnum {
   Cache = 'Cache',
 }
 ```
-**SupportedAndroidRootDirsEnum**
+#### SupportedAndroidRootDirsEnum
 
 Dirs taken from `ReactApplicationContext`
 
@@ -239,7 +264,7 @@ enum SupportedAndroidRootDirsEnum {
 
 ### Functions
 
-**createReduxFileLoggerMiddleware()**
+#### createReduxFileLoggerMiddleware
 
 ```ts
 async function createReduxFileLoggerMiddleware<
@@ -258,7 +283,7 @@ Creates a Redux file logger middleware. Notice, that it doesn't accept `logger`,
 - **fileConfig** - determines the file path (see above)
 - **loggerOptions** - logger options (see above)
 
-**createLoggerMiddleware()**
+#### createLoggerMiddleware
 
 ```ts
 function createLoggerMiddleware<
@@ -271,9 +296,9 @@ Creates a logger middleware. Unlike `createReduxFileLoggerMiddleware()`, it acce
 
 - **options** - logger options (see above)
 
-**addFileLogger()**
+#### addFileLogger
 
-```
+```ts
 const addFileLogger = async (tag: string, fileConfig: FileConfig) => Promise<void>
 ```
 
@@ -282,9 +307,9 @@ Creates a unique file logger instance and stores in a map. Use it when you need 
 - **tag** - unique logger identifier
 - **fileConfig** - determines the file path (see above)
 
-**getFileLogger()**
+#### getFileLogger
 
-```
+```ts
 interface Logger {
   log: (message: string) => void;
 }
@@ -295,10 +320,10 @@ Gets a logger instance from map by `tag`.
 
 - **tag** - unique logger identifier
 
-**archive()**
+#### archive
 
-```
-async function archive(fileConfig: FileConfig, tag?: string) => Promise<void>
+```ts
+async function archive(fileConfig: FileConfig, tag?: string): Promise<void> {}
 ```
 
 Archive logs from all logger instances (or for a specific instance if `tag` is provided) to a file. Supports only `zip` format.
@@ -308,7 +333,7 @@ Archive logs from all logger instances (or for a specific instance if `tag` is p
 
 ### Hooks
 
-**useAsyncStoreCreator()**
+#### useAsyncStoreCreator
 
 ```ts
 type AsyncStoreCreator<
@@ -324,10 +349,6 @@ const useAsyncStoreCreator = <
 >(asyncStoreCreator: AsyncStoreCreator<TState, TAction, TStore>): TStore | undefined => {}
 ```
 Accepts an async store creator function and derives a state from it.
-
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
 ## License
 
