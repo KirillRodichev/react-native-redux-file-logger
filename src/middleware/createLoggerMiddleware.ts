@@ -4,7 +4,11 @@ import type { ThunkMiddleware } from 'redux-thunk';
 import { ReduxLogEntityBuilder } from '../logger/ReduxLogEntityBuilder';
 import { diff } from 'deep-object-diff';
 
-const defaultOptions: Partial<LoggerOptions> = {
+interface MergedOptions extends Omit<LoggerOptions, 'stateTransformer'>  {
+  stateTransformer: (state: any) => any;
+}
+
+const defaultOptions: Required<Pick<LoggerOptions, 'showDiff' | 'stateTransformer'>> = {
   stateTransformer: (state) => state,
   showDiff: true,
 };
@@ -14,7 +18,7 @@ export function createLoggerMiddleware<
   BasicAction extends Action = AnyAction,
   ExtraThunkArg = undefined
 >(options: LoggerOptions<State>): ThunkMiddleware<State, BasicAction, ExtraThunkArg> {
-  const mergedOptions = Object.assign({}, defaultOptions, options);
+  const mergedOptions: MergedOptions = Object.assign({}, defaultOptions, options);
 
   const {
     logger,

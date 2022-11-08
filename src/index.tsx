@@ -1,11 +1,11 @@
-import { addLogger, getLogger } from './logger';
-import { FileConfig, SupportedIosRootDirsEnum } from './types';
+import { addFileLogger, getFileLogger } from './logger';
+import { SupportedIosRootDirsEnum, SupportedAndroidRootDirsEnum, FileConfig } from './types';
 import ReduxFileLoggerModule from './logger/ReduxFileLoggerModule';
 import { useAsyncStoreCreator } from './hooks/useAsyncStoreCreator';
 import { createLoggerMiddleware } from './middleware/createLoggerMiddleware';
 import { createReduxFileLoggerMiddleware } from './middleware/createReduxFileLoggerMiddleware';
 
-export type {LoggerOptions} from './types'
+export type {LoggerOptions, FileConfig, InclusionPredicate} from './types'
 
 function archive(fileConfig: FileConfig, tag?: string) {
   return ReduxFileLoggerModule.archive(fileConfig, tag)
@@ -13,10 +13,11 @@ function archive(fileConfig: FileConfig, tag?: string) {
 
 export {
   archive,
-  addLogger,
-  getLogger,
+  addFileLogger,
+  getFileLogger,
   useAsyncStoreCreator,
   createLoggerMiddleware,
   createReduxFileLoggerMiddleware,
   SupportedIosRootDirsEnum,
+  SupportedAndroidRootDirsEnum,
 };

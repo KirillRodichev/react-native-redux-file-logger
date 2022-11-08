@@ -1,3 +1,6 @@
 import { FileLoggers } from './FileLoggers';
 
-export const { addLogger, getLogger }  = new FileLoggers();
+export const {
+  addLogger: addFileLogger,
+  getLogger: getFileLogger,
+}  = new FileLoggers();

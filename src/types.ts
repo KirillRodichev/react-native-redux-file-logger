@@ -4,7 +4,7 @@ export interface Logger {
   log: (message: string) => void;
 }
 
-type InclusionPredicate<TState> = (action: AnyAction, getState: () => TState) => boolean;
+export type InclusionPredicate<TState> = (action: AnyAction, getState: () => TState) => boolean;
 
 export type LoggerOptions<TState = any, TLogger extends {log: (message: string) => void} = Logger> = {
   actionInclusionPredicate?: InclusionPredicate<TState>;
@@ -14,7 +14,7 @@ export type LoggerOptions<TState = any, TLogger extends {log: (message: string) 
   shouldLogNextState?: boolean;
   showDiff?: boolean;
 
-  stateTransformer: (state: any) => any;
+  stateTransformer?: (state: any) => any;
 
   logger: TLogger;
 };
