@@ -2,6 +2,8 @@
 
 This tool allows you to log Redux actions + state to files. It also provides a convenient API for file logging, so that you can add your own loggers (e.g. navigation state).
 
+**Use case:** QA team can easily create independent logs for each issue, which makes it much easier to understand the root-cause.
+
 <img src='docs/img/logs-example.PNG' width='800'>
 
 ## Motivation
@@ -31,6 +33,10 @@ The idea of this library is to use the standard output functions and redirect th
     - [archive](#archive)
   - [Hooks](#Hooks)
     - [useAsyncStoreCreator](#useAsyncStoreCreator)
+  - [Recipes](#Recipes)
+    - [Pulling files from Android emulators](#Pulling files from Android emulators)
+    - [Browsing files on iOS emulators](#Browsing files on iOS emulators)
+- [Thanks](#Thanks)
 - [License](#License)
 
 ## Installation
@@ -177,12 +183,12 @@ Archiving logs from all file logger instances to a specified file. If you need t
 import { Platform } from 'react-native';
 import { archive, SupportedAndroidRootDirsEnum, SupportedIosRootDirsEnum } from 'react-native-redux-file-logger';
 
-await archive({
+const zipFilePath = await archive({
   rootDir:
     Platform.OS === 'android'
       ? SupportedAndroidRootDirsEnum.Files
       : SupportedIosRootDirsEnum.Cache,
-  fileName: 'logs.zip', // supports only zip format
+  fileName: 'logs.zip',
 });
 ```
 
@@ -323,10 +329,10 @@ Gets a logger instance from map by `tag`.
 #### archive
 
 ```ts
-async function archive(fileConfig: FileConfig, tag?: string): Promise<void> {}
+async function archive(fileConfig: FileConfig, tag?: string): Promise<string> {}
 ```
 
-Archive logs from all logger instances (or for a specific instance if `tag` is provided) to a file. Supports only `zip` format.
+Archive logs from all logger instances (or for a specific instance if `tag` is provided) to a file. Supports only `zip` format for Android. After a successful archive creation the logs are emptied.
 
 - **tag** - unique logger identifier
 - **fileConfig** - determines the file path (see above)
@@ -350,9 +356,29 @@ const useAsyncStoreCreator = <
 ```
 Accepts an async store creator function and derives a state from it.
 
+### Recipes
+
+#### Pulling files from Android emulators
+
+```shell
+adb root
+adb pull /storage/emulated/0/Android/data/com.reduxfileloggerexample/files/example/time-travel.json /Users/{$user}/Desktop
+```
+
+#### Browsing files on iOS emulators
+
+1. Copy `archive` result to the clipboard
+2. Finder --> Go --> Go to folder
+3. Paste the value & hit enter
+
 ## License
 
 MIT
+
+## Thanks
+
+Inspired by [Oleg Titaev](https://github.com/yadormad
+)
 
 ---
 

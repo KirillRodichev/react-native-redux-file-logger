@@ -44,7 +44,7 @@ class ReduxFileLoggerModule(reactContext: ReactApplicationContext) : ReactContex
       compressor.zip(archivingLoggers.values.map { logger -> logger.logFile })
       archivingLoggers.values.forEach { logger -> logger.redirectLogcatToNewFile() }
       Log.i("ReduxFileLoggerModule", zipFile.path)
-      return@withPromise null
+      return@withPromise zipFile.path
     }
   }
 

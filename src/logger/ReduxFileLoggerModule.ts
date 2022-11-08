@@ -20,7 +20,7 @@ const ReduxFileLoggerModule = NativeModules.ReduxFileLogger
 
 type ReduxFileLoggerInterface = {
   addLogger: (tag: string, fileConfig: FileConfig) => Promise<void>;
-  archive: (fileConfig: FileConfig, tag?: String) => Promise<void>;
+  archive: (fileConfig: FileConfig, tag?: String) => Promise<string>;
   log: (tag: string, message: string) => void;
 }
 

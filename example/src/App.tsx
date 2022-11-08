@@ -17,13 +17,14 @@ export default function App() {
 
   const handleArchive = useCallback(async () => {
     try {
-      await archive({
+      const path = await archive({
         rootDir:
           Platform.OS === 'android'
             ? SupportedAndroidRootDirsEnum.Files
             : SupportedIosRootDirsEnum.Cache,
         fileName: 'logs.zip',
       });
+      console.log('path', path);
     } catch (e) {
       console.error(e);
     }

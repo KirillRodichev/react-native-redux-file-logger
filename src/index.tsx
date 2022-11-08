@@ -7,7 +7,7 @@ import { createReduxFileLoggerMiddleware } from './middleware/createReduxFileLog
 
 export type {LoggerOptions, FileConfig, InclusionPredicate} from './types'
 
-function archive(fileConfig: FileConfig, tag?: string) {
+async function archive(fileConfig: FileConfig, tag?: string): Promise<string> {
   return ReduxFileLoggerModule.archive(fileConfig, tag)
 }
 
