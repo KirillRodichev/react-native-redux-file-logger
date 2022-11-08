@@ -12,9 +12,9 @@ The idea of this library is to use the standard output functions and redirect th
 
 - [Installation](#Installation)
 - [Usage](#Usage)
-  - [Creating Redux file logger middleware](#Creating Redux file logger middleware)
-  - [Creating file logger](#Creating file logger)
-  - [Creating archive](#Creating archive)
+  - [Creating Redux file logger middleware](#creating-redux-file-logger-middleware)
+  - [Creating file logger](#creating-file-logger)
+  - [Creating archive](#creating-archive)
 - [API](#API)
   - [Types](#Types)
     - [LoggerOptions](#LoggerOptions)
