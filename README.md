@@ -31,8 +31,8 @@ The idea of this library is to use the standard output functions and redirect th
     - [addFileLogger](#addFileLogger)
     - [getFileLogger](#getFileLogger)
     - [archive](#archive)
-  - [Hooks](#Hooks)
-    - [useAsyncStoreCreator](#useAsyncStoreCreator)
+  - [Utils](#Utils)
+    - [createMiddlewareInjector](#createMiddlewareInjector)
   - [Recipes](#Recipes)
     - [Pulling files from Android emulators](#pulling-files-from-android-emulators)
     - [Browsing files on iOS emulators](#browsing-files-on-ios-emulators)
@@ -50,68 +50,84 @@ npx pod-install
 
 ### Creating Redux file logger middleware
 
-1. Create an async creator for the store that calls `createReduxFileLoggerMiddleware()`
+1. Create a configurator for `createReduxFileLoggerMiddleware()` that returns middleware, so that later it can be injected to the `store`
+
+```ts
+import type { Action, AnyAction } from 'redux';
+import type { ThunkMiddleware } from 'redux-thunk';
+import type { LoggerOptions } from 'react-native-redux-file-logger';
+import { Platform } from 'react-native';
+
+export async function configureReduxFileLoggerMiddleware<
+    State = any,
+    BasicAction extends Action = AnyAction,
+>(): Promise<ThunkMiddleware<State, BasicAction, LoggerOptions<State>> | null> {
+    if (process.env.NODE_ENV === `development`) {
+        const {
+            createReduxFileLoggerMiddleware,
+            SupportedIosRootDirsEnum,
+            SupportedAndroidRootDirsEnum,
+        } = require('react-native-redux-file-logger');
+
+        try {
+            const rootDir =
+                Platform.OS === 'android' ? SupportedAndroidRootDirsEnum.Files : SupportedIosRootDirsEnum.Cache;
+            return await createReduxFileLoggerMiddleware(
+                'redux-action',
+                {
+                    rootDir,
+                    nestedDir: 'logs',
+                    fileName: 'time-travel.json',
+                },
+                {
+                    showDiff: true,
+                    shouldLogPrevState: false,
+                    shouldLogNextState: true,
+                },
+            );
+        } catch (e) {
+            console.error(e);
+        }
+    }
+    return null;
+}
+```
+
+2. Create the store and a middleware injector. We can't just pass the middleware to `configureStore()`, because it's created asynchronously.
 
 ```ts
 import { configureStore } from '@reduxjs/toolkit';
+import { createMiddlewareInjector } from 'react-native-redux-file-logger';
 import counterReducer from './features/counter/slice';
-import type { Middleware } from 'redux';
-import { Platform } from 'react-native';
 
-async function createStore() {
-  const middlewares: Middleware[] = [];
-
-  if (process.env.NODE_ENV === `development`) {
-    const {
-      createReduxFileLoggerMiddleware,
-      SupportedIosRootDirsEnum,
-      SupportedAndroidRootDirsEnum,
-    } = require('react-native-redux-file-logger');
-
-    try {
-      const rootDir = Platform.OS === 'android' ? SupportedAndroidRootDirsEnum.Files : SupportedIosRootDirsEnum.Cache
-      const rflMiddleware = await createReduxFileLoggerMiddleware(
-        'redux-action',
-        {
-          rootDir,
-          nestedDir: 'logs',
-          fileName: 'time-travel.json'
-        },
-        {
-          showDiff: true,
-          shouldLogPrevState: false,
-          shouldLogNextState: true,
-        }
-      )
-
-      middlewares.push(rflMiddleware);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  return configureStore({
+export const store = configureStore({
     reducer: { counter: counterReducer },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middlewares),
-  });
-}
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+});
 
-export default createStore;
+export const middlewareInjector = createMiddlewareInjector<RootState, AppDispatch>(store);
 
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 ```
 
-2. Extract the `store` with `useAsyncStoreCreator()` and pass it to `Provider`
+3. Create Redux file logger middleware and inject it to the `store`.
 
 ```tsx
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import createStore from './store';
-import { useAsyncStoreCreator } from 'react-native-redux-file-logger';
+import { store, middlewareInjector } from './store';
+import { configureReduxFileLoggerMiddleware } from 'react-native-redux-file-logger';
 
 export default function App() {
-  const store = useAsyncStoreCreator(createStore);
-
-  if (!store) return null;
+    useEffect(() => {
+        (async () => {
+            const rflMiddleware = await configureReduxFileLoggerMiddleware();
+            if (rflMiddleware) {
+                middlewareInjector(rflMiddleware);
+            }
+        })();
+    }, []);
 
   return (
     <Provider store={store}>
@@ -337,24 +353,18 @@ Archive logs from all logger instances (or for a specific instance if `tag` is p
 - **tag** - unique logger identifier
 - **fileConfig** - determines the file path (see above)
 
-### Hooks
+### Utils
 
-#### useAsyncStoreCreator
+#### createMiddlewareInjector
 
 ```ts
-type AsyncStoreCreator<
-  TState = any,
-  TAction extends Action = AnyAction,
-  TStore extends Store<TState, TAction> = Store<TState, TAction>
-> = () => Promise<TStore>
-
-const useAsyncStoreCreator = <
-  TState = any,
-  TAction extends Action = AnyAction,
-  TStore extends Store<TState, TAction> = Store<TState, TAction>
->(asyncStoreCreator: AsyncStoreCreator<TState, TAction, TStore>): TStore | undefined => {}
+function createMiddlewareInjector<S = any, D extends Dispatch = Dispatch>(store: MiddlewareAPI<D, S>) {
+    return function inject(middleware: Middleware) {
+        store.dispatch = middleware(store)(store.dispatch);
+    };
+}
 ```
-Accepts an async store creator function and derives a state from it.
+Create an injector that can be used to add middlewares.
 
 ### Recipes
 

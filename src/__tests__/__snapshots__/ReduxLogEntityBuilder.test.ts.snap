@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReduxLogEntityBuilder with all requirements should build all requirements 1`] = `"\\"action: testType @ 12/1/2022, 12:00:00 AM.0 (in 0 ms)\\": {\\"action\\":{\\"type\\":\\"testType\\"},\\"prevState\\":{\\"counter\\":1},\\"diff\\":{\\"counter\\":2},\\"nextState\\":{\\"counter\\":2}},"`;
+
+exports[`ReduxLogEntityBuilder with all requirements should build with diff 1`] = `"\\"action: testType @ 12/1/2022, 12:00:00 AM.0 (in 0 ms)\\": {\\"action\\":{\\"type\\":\\"testType\\"},\\"diff\\":{\\"counter\\":2}},"`;
+
+exports[`ReduxLogEntityBuilder with all requirements should build with next state 1`] = `"\\"action: testType @ 12/1/2022, 12:00:00 AM.0 (in 0 ms)\\": {\\"action\\":{\\"type\\":\\"testType\\"},\\"nextState\\":{\\"counter\\":2}},"`;
+
+exports[`ReduxLogEntityBuilder with all requirements should build with prev state 1`] = `"\\"action: testType @ 12/1/2022, 12:00:00 AM.0 (in 0 ms)\\": {\\"action\\":{\\"type\\":\\"testType\\"},\\"prevState\\":{\\"counter\\":1}},"`;
+
+exports[`ReduxLogEntityBuilder without requirements should build empty action 1`] = `"\\"action: testType @ 12/1/2022, 12:00:00 AM.0 (in 0 ms)\\": {\\"action\\":{\\"type\\":\\"testType\\"}},"`;

@@ -1,44 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { createMiddlewareInjector } from 'react-native-redux-file-logger';
 import counterReducer from './features/counter/slice';
-import type { Middleware } from 'redux';
-import { Platform } from 'react-native';
 
-async function createStore() {
-  const middlewares: Middleware[] = [];
-
-  if (process.env.NODE_ENV === `development`) {
-    const {
-      createReduxFileLoggerMiddleware,
-      SupportedIosRootDirsEnum,
-      SupportedAndroidRootDirsEnum,
-    } = require('react-native-redux-file-logger');
-
-    try {
-      const rootDir = Platform.OS === 'android' ? SupportedAndroidRootDirsEnum.Files : SupportedIosRootDirsEnum.Cache
-      const rflMiddleware = await createReduxFileLoggerMiddleware(
-        'redux-action',
-        {
-          rootDir,
-          nestedDir: 'logs',
-          fileName: 'time-travel.json'
-        },
-        {
-          showDiff: true,
-          shouldLogPrevState: false,
-          shouldLogNextState: true,
-        }
-      )
-
-      middlewares.push(rflMiddleware);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  return configureStore({
+export const store = configureStore({
     reducer: { counter: counterReducer },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middlewares),
-  });
-}
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+});
 
-export default createStore;
+export const middlewareInjector = createMiddlewareInjector<RootState, AppDispatch>(store);
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

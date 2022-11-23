@@ -1,0 +1,94 @@
+{
+    "env": {
+        "react-native/react-native": true
+    },
+    "extends": [
+        "airbnb",
+        "prettier",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:import/typescript",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/eslint-recommended"
+    ],
+    "overrides": [],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "ignorePatterns": ["lib", "docs", "node_modules"],
+    "plugins": ["react", "babel", "prettier", "react-hooks", "react-native", "@typescript-eslint"],
+    "rules": {
+        "prettier/prettier": [
+            "error",
+            {
+                "arrowParens": "always",
+                "bracketSpacing": true,
+                "quoteProps": "as-needed",
+                "singleQuote": true,
+                "printWidth": 120,
+                "tabWidth": 4,
+                "useTabs": false,
+                "endOfLine": "auto",
+                "trailingComma": "all"
+            }
+        ],
+        "react/jsx-props-no-spreading": "off",
+        "react/prop-types": "off",
+        "linebreak-style": "off",
+        "react-native/no-unused-styles": "error",
+        "react-native/split-platform-components": "error",
+        "react-native/no-inline-styles": "error",
+        "react-native/no-color-literals": "error",
+        "react-native/no-raw-text": "error",
+        "no-use-before-define": "off",
+        "no-shadow": "off",
+        "no-plusplus": [
+            "error",
+            {
+                "allowForLoopAfterthoughts": true
+            }
+        ],
+        "react/function-component-definition": "off",
+        "import/no-cycle": "error",
+        "no-underscore-dangle": "off",
+        "react/no-direct-mutation-state": "error",
+        "no-console": [
+            "error",
+            {
+                "allow": ["warn", "error"]
+            }
+        ],
+        "import/extensions": "off",
+        "global-require": "off",
+        "import/prefer-default-export": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-unused-vars": ["error"],
+        "@typescript-eslint/no-extra-semi": "off",
+        "react/jsx-closing-bracket-location": "off",
+        "react/jsx-closing-tag-location": "off",
+        "react/jsx-curly-newline": "off",
+        "react/jsx-curly-spacing": "off",
+        "react/jsx-equals-spacing": "off",
+        "react/jsx-first-prop-new-line": "off",
+        "react/jsx-indent": "off",
+        "react/jsx-filename-extension": "off",
+        "react/jsx-indent-props": "off",
+        "react/jsx-max-props-per-line": "off",
+        "react/jsx-one-expression-per-line": "off",
+        "react/jsx-props-no-multi-spaces": "off",
+        "react/jsx-tag-spacing": "off",
+        "react/jsx-wrap-multilines": "off",
+        "arrow-body-style": "off",
+        "prefer-arrow-callback": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }]
+    }
+}
